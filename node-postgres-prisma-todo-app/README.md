@@ -78,6 +78,8 @@ cd node-postgres-prisma-todo-app
 
 2. **Generate the Prisma Client**:
 
+`npm install` # Install dependencies first
+
 `npx prisma generate`
 
 3. **Build your docker images**:
