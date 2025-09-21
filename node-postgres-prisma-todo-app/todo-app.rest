@@ -1,0 +1,53 @@
+### GET /
+
+GET http://localhost:3000
+
+### Register a user POST /AUTH/REGISTER
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "CyrilFiggis",
+  "password": "guest"
+}
+
+### Login a user POST /AUTH/LOGIN
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "CyrilFiggis",
+  "password": "guest"
+}
+
+### Fetch all todos GET /TODOS (protected)
+
+GET http://localhost:3000/todos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU4NDE3NDQ1LCJleHAiOjE3NTg1MDM4NDV9.PN80yjQnfXKPhgTEwOoplBMHBlxEOL-vqsJWrQ2igS0
+
+### Creates a new todo POST /TODOS (protected)
+
+POST http://localhost:3000/todos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU4NDE3NDQ1LCJleHAiOjE3NTg1MDM4NDV9.PN80yjQnfXKPhgTEwOoplBMHBlxEOL-vqsJWrQ2igS0
+Content-Type: application/json
+
+{
+  "task": "Beat the worm"
+}
+
+### Update a todo PUT /todos/:ID (protected)
+
+PUT http://localhost:3000/todos/2?page=4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU4NDE3NDQ1LCJleHAiOjE3NTg1MDM4NDV9.PN80yjQnfXKPhgTEwOoplBMHBlxEOL-vqsJWrQ2igS0
+Content-Type: application/json
+
+{
+  "completed": 1
+}
+
+### Delete a todo DELETE /todos/:ID (protected)
+
+DELETE  http://localhost:3000/todos/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU4NDE3NDQ1LCJleHAiOjE3NTg1MDM4NDV9.PN80yjQnfXKPhgTEwOoplBMHBlxEOL-vqsJWrQ2igS0
