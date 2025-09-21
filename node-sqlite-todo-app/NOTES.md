@@ -279,13 +279,13 @@ Hit ```Ctrl+Shift+P``` → “Toggle Auto Attach”. If enabled, every time you 
 
 ---
 
-# 📡 HTTP Request Data Types
+## HTTP Request Data Types
 
 When we send information from client → server, it can go **several ways**. Knowing the difference is critical for building APIs.
 
 ---
 
-## 1️⃣ JSON in Request Body
+## 1. JSON in Request Body
 - **Where**: `POST`, `PUT`, `PATCH` requests (can technically be used in `DELETE`, though not common).  
 - **Content-Type**: `application/json`  
 - **How it looks**:
