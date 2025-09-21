@@ -204,7 +204,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### ⚙️ How it works in an app
 
-1. Register/Login
+1. **Register/Login**
 
   - User provides username + password.
 
@@ -214,14 +214,14 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
   - Token returned to client.
 
-2. Future Requests
+2. **Future Requests**
 
   - Client includes token in headers:
 
-  - Authorization: Bearer <token>
+  - ```Authorization: Bearer <token>```
 
 
-  - Server verifies token with jwt.verify().
+  - Server verifies token with ```jwt.verify().```
 
   - If valid, request proceeds; otherwise returns 401 Unauthorized.
 
@@ -279,3 +279,126 @@ Hit ```Ctrl+Shift+P``` → “Toggle Auto Attach”. If enabled, every time you 
 
 ---
 
+# 📡 HTTP Request Data Types
+
+When we send information from client → server, it can go **several ways**. Knowing the difference is critical for building APIs.
+
+---
+
+## 1️⃣ JSON in Request Body
+- **Where**: `POST`, `PUT`, `PATCH` requests (can technically be used in `DELETE`, though not common).  
+- **Content-Type**: `application/json`  
+- **How it looks**:
+
+```http
+POST /todos HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+  "task": "Finish tutorial",
+  "completed": false
+}
+```
+
+- **Pros:** Structured, easy to read and parse.
+
+- Used in modern APIs (REST, GraphQL often uses JSON as payload).
+
+### 2. Query Parameters
+
+**Where:** in the URL of GET requests or even POST/PUT.
+
+**Format:** ?key=value&key2=value2
+
+**Example:**
+```http
+GET /todos?page=2&limit=10 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer <token>
+```
+- **Pros:** easy to bookmark or share URLs.
+
+- **Cons:** limited length (depends on browser/server), data is visible in URL.
+
+### 3. URL Path Parameters
+
+**Where:** part of the URL path itself.
+
+**Format:** /resource/:id
+
+**Example:**
+
+```http
+PUT /todos/5 HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+  "completed": true
+}
+```
+
+- **Pros:** clean, RESTful way to identify a specific resource.
+
+### 4. HTTP Headers
+
+**Where:** any request; used for metadata, auth tokens, etc.
+
+**Example:**
+
+```http
+GET /todos HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer <token>
+X-Custom-Header: custom-value
+```
+
+- **Pros:** separates data from body, invisible in URL.
+
+- **Common uses:** authentication, content type, caching info.
+
+### 5. Form Data (application/x-www-form-urlencoded)
+
+**Used:** traditional HTML forms.
+
+**Format:** key-value pairs encoded in URL style.
+
+**Example:**
+
+```http
+POST /login HTTP/1.1
+Host: localhost:3000
+Content-Type: application/x-www-form-urlencoded
+
+username=CyrilFiggis&password=guest
+```
+
+- **Pros:** simple, supported everywhere.
+
+- **Cons:** not good for nested structures.
+
+### 6. Multipart/Form-Data
+
+**Used:** file uploads.
+
+**Example:**
+
+```http
+POST /upload HTTP/1.1
+Host: localhost:3000
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="photo.png"
+Content-Type: image/png
+
+<binary data here>
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+```
+
+- **Pros:** can send files + data in one request.
+
+- **Cons:** more complex to parse manually; usually use middleware like multer in Node.js.
