@@ -96,12 +96,12 @@ git push origin main
 
 ---
 
-## 3️⃣ Stashing Unfinished Work (Optional)
+## 3. Stashing Unfinished Work (Optional)
 
 * If you need to switch branches without committing unfinished changes:
 
 ```bash
-git stash save "WIP: pptx slide layout"
+git stash save "WIP: <describe your unfinished changes>"
 git checkout master
 # Do stuff on master
 ```
