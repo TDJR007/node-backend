@@ -8,10 +8,9 @@ const pool = new Pool({
     database: process.env.DB_NAME || 'url_shortener',
     password: process.env.DB_PASSWORD || 'password',
     port: process.env.DB_PORT || 5432,
-    ssl: false
-    // ssl: {
-    //     rejectUnauthorized: false // Allow self-signed AWS certificates
-    // }
+    ssl: {
+        rejectUnauthorized: false // Allow self-signed AWS certificates
+    }
 })
 
 // Test the database connection

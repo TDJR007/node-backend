@@ -37,11 +37,26 @@ echo "Installing Node.js..."
 # Remove any existing Node.js versions
 sudo dnf remove -y nodejs
 
-# Add NodeSource repo for Node.js 18
-curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
+# Download the setup script to a file first
+echo "Downloading NodeSource setup script..."
+curl -fsSL https://rpm.nodesource.com/setup_18.x -o /tmp/nodesource_setup.sh
+
+# Run the setup script
+echo "Running NodeSource setup..."
+sudo bash /tmp/nodesource_setup.sh
 
 # Install Node.js 18
+echo "Installing Node.js..."
 sudo dnf install -y nodejs
+
+# Clean up
+rm -f /tmp/nodesource_setup.sh
+
+# Verify installation
+echo "Node.js version:"
+node --version
+npm --version
+
 # sudo dnf module enable -y nodejs:$NODE_VERSION  # Enables the Node.js module in dnf (Amazon Linux 2023)
 # sudo dnf install -y nodejs  # Installs Node.js and npm
 
