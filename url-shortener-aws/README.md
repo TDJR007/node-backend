@@ -1,4 +1,4 @@
-# Running the Node.js, Nginx, and PostgreSQL App Locally  
+# Running the URL Shortener App Locally  
 
 Follow these steps to set up and run the URL shortener application locally.  
 
