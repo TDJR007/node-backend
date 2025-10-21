@@ -17,7 +17,10 @@ set -e  # Exit script immediately if any command fails (useful for debugging)
 GITHUB_USERNAME="your-username"      # Your GitHub username
 GITHUB_REPO="your-private-repo"      # Your private repository name
 GITHUB_TOKEN="your-github-token"     # Your GitHub personal access token for authentication
+GITHUB_BRANCH="your-feature-branch"  # Your feature branch name
+APP_SUBFOLDER="actual-app-folder"    # The folder inside repo with your code
 APP_DIR="/var/www/myapp"             # Directory where the app will be cloned
+APP_CODE_DIR="$APP_DIR/$APP_SUBFOLDER" # Full path to your actual app
 NODE_VERSION="18"                    # Node.js version to install
 PORT=3000                             # Port where your app will run
 
@@ -68,25 +71,30 @@ if [ -d "$APP_DIR" ]; then
     cd "$APP_DIR"
     echo "Resetting local changes and pulling latest updates..."
     git reset --hard HEAD
-    git pull origin main  # Pull latest changes from the remote repository
+    git checkout "$GITHUB_BRANCH"           # Switch to your feature branch
+    git pull origin "$GITHUB_BRANCH"        # Pull from feature branch, not main
 else
-    echo "Cloning repository..."
-    git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/$GITHUB_REPO.git "$APP_DIR"
-    cd "$APP_DIR"
+    echo "Cloning repository (branch: $GITHUB_BRANCH)..."
+    git clone -b "$GITHUB_BRANCH" https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/$GITHUB_REPO.git "$APP_DIR"
+    # The -b flag clones a specific branch directly
 fi
+
+# Navigate to the actual app folder
+cd "$APP_CODE_DIR"  # Go into the nested folder where your code lives
 
 # ========================================================================================
 # 4️⃣ INSTALL NODE.JS DEPENDENCIES
 # ========================================================================================
 echo "Installing Node.js dependencies..."
+cd "$APP_CODE_DIR"  # Make sure we're in the right folder
 npm install  # Installs all required npm packages from package.json
 
 # ========================================================================================
 # 5️⃣ SET UP ENVIRONMENT VARIABLES
 # ========================================================================================
-if [ ! -f "$APP_DIR/.env" ]; then
+if [ ! -f "$APP_CODE_DIR/.env" ]; then
     echo "No .env file found. Creating a default .env file..."
-    cat <<EOT > "$APP_DIR/.env"
+    cat <<EOT > "$APP_CODE_DIR/.env"  
 DB_USER=your_rds_username
 DB_PASSWORD=your_rds_password
 DB_HOST=your_rds_endpoint
@@ -142,6 +150,7 @@ sudo systemctl enable nginx  # Enables Nginx to start automatically on system re
 echo "Starting the application with PM2..."
 sudo npm install -g pm2  # Installs PM2 globally (process manager for Node.js)
 pm2 stop all || true  # Stops any running instances (if they exist)
+cd "$APP_CODE_DIR" # Make sure we're in the right directory
 pm2 start src/index.js --name myapp  # Starts the application
 pm2 save  # Saves the PM2 process list so it restarts after a reboot
 pm2 startup systemd  # Ensures the app starts automatically on system boot
