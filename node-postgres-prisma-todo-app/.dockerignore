@@ -1,0 +1,25 @@
+# Ignore node modules and dependency folders
+node_modules
+npm-debug.log
+yarn-error.log
+
+# OS / IDE files
+.DS_Store
+.vscode
+.idea
+*.swp
+
+# Docker related
+docker-compose*.yml
+Dockerfile*
+
+# Build artifacts or Prisma cache
+dist
+coverage
+.prisma
+
+# Misc
+.git
+.gitignore
+*.md
+todo-app.rest

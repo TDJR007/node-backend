@@ -34,6 +34,7 @@ backend-todo-app/
 │   └── server.js                # Main server entry point that sets up routing and middleware
 │
 ├── Dockerfile                   # Docker container setup instructions
+├── .dockerignore                # List files to exclude from docker build context
 ├── docker-compose.yaml          # Docker setup config file
 ├── package.json                 # Project dependencies and scripts
 ├── package-lock.json            # Lockfile for exact dependency versions
@@ -52,6 +53,7 @@ backend-todo-app/
   - **`server.js`**: The entry point for the Express.js application, which configures the app, routes, and middleware.
 - **`.env`**: Stores environment variables like `DATABASE_URL` and `JWT_SECRET`. These variables are used to configure Prisma, JWT, and database connections.
 - **`Dockerfile`**: The Dockerfile for building the Node.js application in a containerized environment.
+- **`.dockerignore`**: Specifies files and directories to exclude from the Docker build context, improving build speed, reducing image size, and keeping sensitive/local files (like `node_modules`) out of the container.
 - **`docker-compose.yaml`**: Configuration for Docker Compose, which sets up both the Node.js app and PostgreSQL in separate containers.
 - **`package.json`**: Defines the Node.js dependencies and scripts used to run the application (e.g., `npm start`).
 - **`README.md`**: Project documentation, including setup instructions and directory structure (this file).

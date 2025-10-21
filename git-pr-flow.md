@@ -33,10 +33,19 @@ git commit -m "added: some new feature"
 Before merging, make sure your feature branch has latest master commits:
 
 ```bash
+# 1. Update remote references
 git fetch origin
+
+# 2. Ensure your feature branch is up-to-date with remote
 git checkout feature/new-user-story
-git rebase master  # keeps history clean
-# or git merge master  # if you prefer merge commits
+git pull --rebase origin feature/new-user-story
+
+# 3. Rebase your branch on latest master for integration
+git rebase origin/master
+# (or git merge origin/master if you prefer merge commits)
+
+# 4. Resolve conflicts and test thoroughly
+git rebase --continue
 ```
 
 * Resolve conflicts if any.
